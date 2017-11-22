@@ -29,9 +29,9 @@ int main(void) {
     assert(rc == 0);
     rc = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
     assert(rc == 0);
-    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
-    assert(rc == 0);
     rc = pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+    assert(rc == 0);
+    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
     assert(rc == 0);
     rc = pthread_mutexattr_init(&mutex_attr);
     assert(rc == 0);
@@ -68,7 +68,7 @@ static void *count_thr(void *arg) {
         assert(rc == 0);
         lcd_write_at(id, 0, "Thread %ld : %010ld", id, counter);
         counter += 1;
-        /*usleep(100000);*/
+        usleep(100000);
         rc = pthread_mutex_unlock(&mutex);
         assert(rc == 0);
     }

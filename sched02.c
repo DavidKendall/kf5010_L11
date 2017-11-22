@@ -5,6 +5,7 @@
 #include "console.h"
 
 enum {
+    BASE_PRIORITY = 1,
     N_THREADS = 2,
 };
 
@@ -26,13 +27,13 @@ int main(void) {
     assert(rc == 0);
     rc = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
     assert(rc == 0);
-    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
-    assert(rc == 0);
     rc = pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+    assert(rc == 0);
+    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
     assert(rc == 0);
 
     for (i = 0; i < N_THREADS; i += 1) {
-        fifo_param.sched_priority = 1 + i;
+        fifo_param.sched_priority = BASE_PRIORITY + i;
         rc = pthread_attr_setschedparam(&attr, &fifo_param);
         assert(rc == 0);
         rc = pthread_create(&thread[i], &attr, count_thr, (void *)i);
@@ -55,7 +56,7 @@ static void *count_thr(void *arg) {
     while (true) {
         lcd_write_at(id, 0, "Thread %ld : %010ld", id, counter);
         counter += 1;
-        /*usleep(100000);*/
+        usleep(100000);
     }
     pthread_exit(0);
 }

@@ -30,9 +30,9 @@ int main(void) {
     assert(rc == 0);
     rc = pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
     assert(rc == 0);
-    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
-    assert(rc == 0);
     rc = pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+    assert(rc == 0);
+    rc = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
     assert(rc == 0);
     rc = pthread_mutexattr_init(&mutex_attr);
     assert(rc == 0);
