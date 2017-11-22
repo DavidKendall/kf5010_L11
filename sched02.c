@@ -56,7 +56,7 @@ static void *count_thr(void *arg) {
     while (true) {
         lcd_write_at(id, 0, "Thread %ld : %010ld", id, counter);
         counter += 1;
-        usleep(100000);
+        /*usleep(100000);*/
     }
     pthread_exit(0);
 }
